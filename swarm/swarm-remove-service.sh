@@ -1,8 +1,14 @@
 #!/bin/bash
 
 ###
-# create docker swarm service
+# remove docker swarm service
 ###
+
+if [[ $# -ne 2 ]];
+then
+  echo "invalid arguments"
+	exit -1
+fi
 
 SERVICENAME="$1"
 

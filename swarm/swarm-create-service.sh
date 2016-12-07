@@ -4,6 +4,12 @@
 # create docker swarm service
 ###
 
+if [[ $# -ne 3 ]];
+then
+  echo "invalid arguments"
+	exit -1
+fi
+
 SERVICENAME="$1"
 
 DOCKER_IMAGE="$2"

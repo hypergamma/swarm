@@ -13,22 +13,24 @@
 ###
 # ssh-copy-id for docker-machine control
 ###
-./ssh-copy-id.sh ../conf/server-swarm-list.conf
+./ssh-copy-id.sh ../conf/server-swarm-node.conf
+./ssh-copy-id.sh ../conf/server-swarm-manager.conf
 
 ###
-# Prepare ssh pair
+# create docker-machine
 ###
-#generate ssh keypair
-#ssh-keygen -t rsa
+./docker-machine-create.sh ../conf/server-swarm-node.conf
+./docker-machine-create.sh ../conf/server-swarm-manager.conf
 
-#Copy ssh id
-ssh-copy-id gamma@52.185.151.222
-ssh-copy-id gamma@13.76.246.233
-ssh-copy-id gamma@52.163.60.150
-ssh-copy-id gamma@52.187.40.252
-ssh-copy-id gamma@52.163.62.148
-ssh-copy-id gamma@13.76.246.135
-ssh-copy-id gamma@207.46.226.210
-ssh-copy-id gamma@52.163.94.98
-ssh-copy-id gamma@13.76.142.26
-ssh-copy-id gamma@52.187.46.38
+###
+# create gamma-proxy service
+###
+GAMMA_PROXY_NAME='gamma-proxy'
+GAMMA_PROXY_REPLICA_COUNT=10
+GAMMA_PROXY_IMAGE_REGISTRY='52.187.69.164:5000/gamma-proxy'
+GAMMA_PROXY_PORTS='3030:3030'
+NETWORK_OVERLAY='gamma-network'
+
+sudo docker service create --name $GAMMA_PROXY_IMAGE_REGISTRY -p $GAMMA_PROXY_PORTS --replicas $GAMMA_PROXY_REPLICA_COUNT --network $NETWORK_OVERLAY
+
+#sudo docker service create --replicas 1 --network gamma-network --name gamma-proxy -p 3030:3030 52.187.69.164:5000/gamma-proxy
