@@ -1,20 +1,19 @@
 #!/bin/bash
 
 ###
-# Script for initializing gamma-controller
+# Script for initializing swarm-manager
 ###
 
 ###
-# Install docker TODO
+# Install docker
 ###
-
+./init-docker.sh
 
 
 ###
-# Install docker-machine TODO
+# ssh-copy-id for docker-machine control
 ###
-
-
+./ssh-copy-id.sh ../conf/server-swarm-list.conf
 
 ###
 # Prepare ssh pair
