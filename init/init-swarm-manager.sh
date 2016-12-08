@@ -31,6 +31,6 @@ GAMMA_PROXY_IMAGE_REGISTRY='52.187.69.164:5000/gamma-proxy'
 GAMMA_PROXY_PORTS='3030:3030'
 NETWORK_OVERLAY='gamma-network'
 
-sudo docker service create --name $GAMMA_PROXY_IMAGE_REGISTRY -p $GAMMA_PROXY_PORTS --replicas $GAMMA_PROXY_REPLICA_COUNT --network $NETWORK_OVERLAY
+sudo docker service create --name $GAMMA_PROXY_NAME -p $GAMMA_PROXY_PORTS --replicas $GAMMA_PROXY_REPLICA_COUNT --constraint "node.hostname==gamma-manager01" --network $NETWORK_OVERLAY $GAMMA_PROXY_IMAGE_REGISTRY
 
-#sudo docker service create --replicas 1 --network gamma-network --name gamma-proxy -p 3030:3030 52.187.69.164:5000/gamma-proxy
+#sudo docker service create --replicas 1 --network gamma-network --constraint "node.hostname==gamma-manager01" --name gamma-proxy -p 3030:3030 52.187.69.164:5000/gamma-proxy

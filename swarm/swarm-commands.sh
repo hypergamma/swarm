@@ -20,5 +20,7 @@ docker service update --replicas 5 redis
 #inspect swarm service
 sudo docker service inspect {servicename} [OPTIONAL] -f "{{ .Endpoint.VirtualIPs }}"
 
+#get replica count
+sudo docker service inspect {servicename} -f "{{ .Spec.Mode.Replicated.Replicas }}"
 
 sudo docker exec -it fd3b /bin/bash
